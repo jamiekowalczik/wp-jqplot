@@ -207,7 +207,28 @@ DOC;
 			$datarenderer = "";
 			$jsrendererdoc = "";
 			
-				
+			if(!$this->chartDataRenderer == ""){
+				$chartval = "";
+				$datarenderer = "dataRenderer: datarenderer$this->chartName,";
+			
+				$jsrendererdoc =<<<DOC
+				var datarenderer$this->chartName = function() {
+				var ret = null;
+				$.ajax({
+					// have to use synchronous here, else the function
+					// will return before the data is fetched
+					async: false,
+					url: '$this->chartDataRenderer',
+					dataType:"json",
+					success: function(data) {
+						ret = data;
+					}
+				});
+				return ret;
+			};
+DOC;
+			
+			}	
 			$labelposition = "";
 			if(!$this->chartLabelPosition == ""){
 				$labelposition = "labelPosition: '$this->chartLabelPosition',";
@@ -222,8 +243,10 @@ DOC;
 			
 			//[[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]
 			$jsdoc =<<<DOC
-				
-     		jQuery.jqplot('$this->chartName', $this->chartDatasets );
+			$jsrendererdoc
+     		jQuery.jqplot('$this->chartName', $this->chartDatasets, {
+				$datarenderer
+			});
 DOC;
 			return array(
 					"chart-js" => $jsdoc,
