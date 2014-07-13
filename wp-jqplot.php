@@ -9,6 +9,7 @@ Author URI: http://www.google.com/
 */
 
 include 'chart_model.php';
+include 'wp_jqplot_widget.php';
 
 function jqplot_shortcode( $atts ) {
 
@@ -35,7 +36,9 @@ function jqplot_shortcode( $atts ) {
 			'datapointlabel'   => '',
 			'datarendererurl'  => '',
 			'showlegend'	   => 'true',
-			'enablehighlighter' => 'false'
+			'enablehighlighter' => 'false',
+			'enablecursor'	   => 'false',
+			'enablezoom'	   => 'false'
 			), $atts )
 	);
 
@@ -66,6 +69,8 @@ function jqplot_shortcode( $atts ) {
 	$obj->setChartWidth($width);
 	$obj->setChartShowLegend($showlegend);
 	$obj->setChartEnableHighlighter($enablehighlighter);
+	$obj->setChartEnableCursor($enablecursor);
+	$obj->setChartEnableZoom($enablezoom);
 	
 	if($type == "gauge"){
 		$obj->setChartTicks($ticks);

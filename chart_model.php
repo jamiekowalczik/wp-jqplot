@@ -14,8 +14,6 @@ class Chart_Model {
 	protected $chartMax = "";
 	protected $chartIntervals = "";
 	protected $chartIntervalColors = "";
-	protected $arrDataPoints = array();
-	protected $arrDataPointNames = array();
 	protected $arrDataPointLabel = array();
 	protected $chartDataRenderer = "";
 	protected $chartDatasets = "";
@@ -23,6 +21,8 @@ class Chart_Model {
 	protected $chartWidth = "";
 	protected $boolShowLegend = 'true';
 	protected $boolEnableHighlighter = 'false';
+	protected $boolEnableCursor = 'false';
+	protected $boolEnableZoom = 'false';
 	
 	public function newChart(){
 		try {
@@ -47,6 +47,8 @@ class Chart_Model {
 			$this->chartWidth = "";
 			$this->boolShowLegend = 'true';
 			$this->boolEnableHighlighter = 'false';
+			$this->boolEnableCursor = 'false';
+			$this->boolEnableZoom = 'false';
 		}catch(Exception $e){
 			echo $e->getMessage();
 		}
@@ -159,6 +161,18 @@ class Chart_Model {
 	public function setChartEnableHighlighter($aBoolEnableHighlighter){
 		if(!empty($aBoolEnableHighlighter)){
 			$this->boolEnableHighlighter = $aBoolEnableHighlighter;
+		}
+	}
+	
+	public function setChartEnableCursor($aBoolEnableCursor){
+		if(!empty($aBoolEnableCursor)){
+			$this->boolEnableCursor = $aBoolEnableCursor;
+		}
+	}
+	
+	public function setChartEnableZoom($aBoolEnableZoom){
+		if(!empty($aBoolEnableZoom)){
+			$this->boolEnableZoom = $aBoolEnableZoom;
 		}
 	}
 	
@@ -275,8 +289,12 @@ DOC;
 				$chartlegend = "legend:{show: true},";
 			}
 			$chartHighlighter = "";
-			if($this->boolEnableHighlighter == 'true'){
-				$chartHighlighter = "highlighter: {show: true},";
+			if($this->boolEnableHighlighter == 'false'){
+				$chartHighlighter = "highlighter: {show: false},";
+			}
+			$chartCursor = "cursor: {show: false,zoom: false,tooltipLocation:'sw'},";
+			if($this->boolEnableCursor == 'true'){
+				$chartCursor = "cursor: {show: true,zoom: $this->boolEnableZoom,tooltipLocation:'sw'},";
 			}
 			
 			$htmlbody = "<div id=\"$this->chartName\" style=\"height:$this->chartHeight;width:$this->chartWidth;float:left;margin 0 0 0 0;\"></div>";
@@ -285,11 +303,7 @@ DOC;
 			$jsrendererdoc
      		jQuery.jqplot('$this->chartName', $this->chartDatasets, {
      			$chartHighlighter
-				cursor: {
-				      show: true,
-				      zoom: true,
-				      tooltipLocation:'sw'
-				},
+				$chartCursor
 				$chartlegend
 				series: [
 				        $chartDataPointLabel
