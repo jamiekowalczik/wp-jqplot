@@ -3,7 +3,7 @@
 Plugin Name: jqPlot Charts and Graphs for jQuery
 Plugin URI: http://www.google.com
 Description: A pure JavaScript charting plugin for the jQuery javascript framework. 
-Version: 1.1.0
+Version: 1.0.0
 Author: JK
 Author URI: http://www.google.com/
 */
@@ -32,6 +32,7 @@ function jqplot_shortcode( $atts ) {
 			'intervalcolors'   => '', //'#FFA4A4', '#FF8E8E', '#FF7373', '#FF5353', '#FF2626', '#F70000',
 			'value'            => '',
 			'datasets'		   => '',
+			'datapointlabel'   => '',
 			'datarendererurl'  => ''
 			), $atts )
 	);
@@ -45,8 +46,14 @@ function jqplot_shortcode( $atts ) {
 	$chart = "";
 	
 	$obj = new Chart_Model();
-	
 	$obj->newChart();
+	
+	$datapointlabel = explode(",", $datapointlabel);
+	$datapointlabeltotal = count($datapointlabel);
+	for ($i = 0; $i < $datapointlabeltotal; $i++){
+		$obj->addDataPointLabel($datapointlabel[$i]);
+	}
+	
 	$obj->setChartName($name);
 	$obj->setChartTitle($title);
 	$obj->setChartLabel($label);
