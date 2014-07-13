@@ -3,7 +3,7 @@
 Plugin Name: jqPlot Charts and Graphs for jQuery
 Plugin URI: http://www.google.com
 Description: A pure JavaScript charting plugin for the jQuery javascript framework. 
-Version: 1.0.0
+Version: 1.1.0
 Author: JK
 Author URI: http://www.google.com/
 */

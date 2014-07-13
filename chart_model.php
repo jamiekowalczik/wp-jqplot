@@ -185,7 +185,7 @@ DOC;
 				$labelheightadjust = "labelHeightAdjust: $this->chartLabelHeightAdjust,";
 			}
 			
-			$htmlbody = "<div id=\"$this->chartName\" style=\"height:180px;width:275px;float:left;margin 0 0 0 0;\"></div>";
+			$htmlbody = "<div id=\"$this->chartName\" style=\"height:$this->chartHeight;width:$this->chartWidth;float:left;margin 0 0 0 0;\"></div>";
 			$jsdoc =<<<DOC
 				$jsrendererdoc;
 				var chartVal = [$this->chartValue];
@@ -260,6 +260,21 @@ DOC;
 			$jsdoc =<<<DOC
 			$jsrendererdoc
      		jQuery.jqplot('$this->chartName', $this->chartDatasets, {
+     			highlighter: {
+				      show: false,
+				},
+				cursor: {
+				      show: true,
+				      zoom: true,
+				      tooltipLocation:'sw'
+				},
+				legend:{
+				        show: true,
+				        placement: 'outside',
+				        background: 'white',
+            			textColor: 'black',
+            			fillalpha: 100
+				},
 				$datarenderer
 			});
 DOC;

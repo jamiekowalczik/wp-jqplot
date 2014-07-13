@@ -4,7 +4,7 @@ Donate link: http://www.google.com
 Tags: javascript, jquery, excanvas, jqplot
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 1.0.8
+Stable tag: 1.3
 
 jqPlot is a pure JavaScript charting plugin for the jQuery javascript framework. 
 
