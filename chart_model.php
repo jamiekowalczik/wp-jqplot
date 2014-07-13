@@ -38,8 +38,6 @@ class Chart_Model {
 			$this->chartMax = "";
 			$this->chartIntervals = "";
 			$this->chartIntervalColors = "";
-			$this->arrDataPoints = array();
-			$this->arrDataPointNames = array();
 			$this->arrDataPointLabel = array();
 			$this->chartDataRenderer = "";
 			$this->chartDatasets = "";
@@ -186,18 +184,18 @@ class Chart_Model {
 				$datarenderer = "dataRenderer: datarenderer$this->chartName,";
 				
 				$jsrendererdoc =<<<DOC
-				var datarenderer$this->chartName = function() {
-				var ret = null;
-				$.ajax({
-					async: false,
-					url: '$this->chartDataRenderer',
-					dataType:"json",
-					success: function(data) {
-						ret = data;
-					}
-				});
-				return ret;
-			};
+					var datarenderer$this->chartName = function() {
+						var ret = null;
+						$.ajax({
+							async: false,
+							url: '$this->chartDataRenderer',
+							dataType:"json",
+							success: function(data) {
+								ret = data;
+							}
+						});
+						return ret;
+					};
 DOC;
 			}
 			
@@ -254,18 +252,18 @@ DOC;
 				$datarenderer = "dataRenderer: datarenderer$this->chartName,";
 			
 				$jsrendererdoc =<<<DOC
-				var datarenderer$this->chartName = function() {
-				var ret = null;
-				$.ajax({
-					async: false,
-					url: '$this->chartDataRenderer',
-					dataType:"json",
-					success: function(data) {
-						ret = data;
-					}
-				});
-				return ret;
-			};
+					var datarenderer$this->chartName = function() {
+						var ret = null;
+						$.ajax({
+							async: false,
+							url: '$this->chartDataRenderer',
+							dataType:"json",
+							success: function(data) {
+								ret = data;
+							}
+						});
+						return ret;
+					};
 DOC;
 			
 			}	
@@ -279,19 +277,22 @@ DOC;
 				$labelheightadjust = "labelHeightAdjust: $this->chartLabelHeightAdjust,";
 			}
 			
-			$chartDataPointLabel = "";
+			$chartDataPointLabel = "series: [";
 			foreach($this->arrDataPointLabel as $aDataPointLabel){
 				$chartDataPointLabel .= "{label:'".$aDataPointLabel."'},";
 			}
+			$chartDataPointLabel .= "],";
 				
 			$chartlegend = "";
 			if($this->boolShowLegend == 'true'){
 				$chartlegend = "legend:{show: true},";
 			}
+			
 			$chartHighlighter = "";
 			if($this->boolEnableHighlighter == 'false'){
 				$chartHighlighter = "highlighter: {show: false},";
 			}
+			
 			$chartCursor = "cursor: {show: false,zoom: false,tooltipLocation:'sw'},";
 			if($this->boolEnableCursor == 'true'){
 				$chartCursor = "cursor: {show: true,zoom: $this->boolEnableZoom,tooltipLocation:'sw'},";
@@ -305,9 +306,7 @@ DOC;
      			$chartHighlighter
 				$chartCursor
 				$chartlegend
-				series: [
-				        $chartDataPointLabel
-				    ],
+				$chartDataPointLabel 
 				$datarenderer
 			});
 DOC;

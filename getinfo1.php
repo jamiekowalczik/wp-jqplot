@@ -1,6 +1,6 @@
 <?php
-   $myarray = array(array(5,1),array(6,3),array(7,4),array(3,5));
-   $myarray1 = array(array(2,3),array(5,6),array(7,4),array(9,5));
-   $myarray2 = array(array(4,6),array(5,6),array(7,7),array(8,5));
+   $myarray = array(array(13,70),array(14,72),array(15,72),array(16,73));
+   $myarray1 = array(array(13,32),array(14,30),array(15,31),array(16,32));
+   $myarray2 = array(array(13,79),array(14,80),array(15,84),array(16,84));
    echo json_encode(array($myarray,$myarray1,$myarray2));
 ?>
