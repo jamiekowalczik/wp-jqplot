@@ -21,6 +21,8 @@ class Chart_Model {
 	protected $chartDatasets = "";
 	protected $chartHeight = "";
 	protected $chartWidth = "";
+	protected $boolShowLegend = 'true';
+	protected $boolEnableHighlighter = 'false';
 	
 	public function newChart(){
 		try {
@@ -43,6 +45,8 @@ class Chart_Model {
 			$this->chartDatasets = "";
 			$this->chartHeight = "";
 			$this->chartWidth = "";
+			$this->boolShowLegend = 'true';
+			$this->boolEnableHighlighter = 'false';
 		}catch(Exception $e){
 			echo $e->getMessage();
 		}
@@ -143,6 +147,18 @@ class Chart_Model {
 	public function setChartWidth($aChartWidth){
 		if(!empty($aChartWidth)){
 			$this->chartWidth = $aChartWidth;
+		}
+	}
+	
+	public function setChartShowLegend($aBoolShowLegend){
+		if(!empty($aBoolShowLegend)){
+			$this->boolShowLegend = $aBoolShowLegend;
+		}
+	}
+	
+	public function setChartEnableHighlighter($aBoolEnableHighlighter){
+		if(!empty($aBoolEnableHighlighter)){
+			$this->boolEnableHighlighter = $aBoolEnableHighlighter;
 		}
 	}
 	
@@ -254,26 +270,27 @@ DOC;
 				$chartDataPointLabel .= "{label:'".$aDataPointLabel."'},";
 			}
 				
+			$chartlegend = "";
+			if($this->boolShowLegend == 'true'){
+				$chartlegend = "legend:{show: true},";
+			}
+			$chartHighlighter = "";
+			if($this->boolEnableHighlighter == 'true'){
+				$chartHighlighter = "highlighter: {show: true},";
+			}
+			
 			$htmlbody = "<div id=\"$this->chartName\" style=\"height:$this->chartHeight;width:$this->chartWidth;float:left;margin 0 0 0 0;\"></div>";
 			
 			$jsdoc =<<<DOC
 			$jsrendererdoc
      		jQuery.jqplot('$this->chartName', $this->chartDatasets, {
-     			highlighter: {
-				      show: false,
-				},
+     			$chartHighlighter
 				cursor: {
 				      show: true,
 				      zoom: true,
 				      tooltipLocation:'sw'
 				},
-				legend:{
-				        show: true,
-				        placement: 'outside',
-				        background: 'white',
-            			textColor: 'black',
-            			fillalpha: 100
-				},
+				$chartlegend
 				series: [
 				        $chartDataPointLabel
 				    ],

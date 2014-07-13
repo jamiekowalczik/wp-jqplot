@@ -33,7 +33,9 @@ function jqplot_shortcode( $atts ) {
 			'value'            => '',
 			'datasets'		   => '',
 			'datapointlabel'   => '',
-			'datarendererurl'  => ''
+			'datarendererurl'  => '',
+			'showlegend'	   => 'true',
+			'enablehighlighter' => 'false'
 			), $atts )
 	);
 
@@ -62,6 +64,8 @@ function jqplot_shortcode( $atts ) {
 	$obj->setChartDataRenderer($datarendererurl);
 	$obj->setChartHeight($height);
 	$obj->setChartWidth($width);
+	$obj->setChartShowLegend($showlegend);
+	$obj->setChartEnableHighlighter($enablehighlighter);
 	
 	if($type == "gauge"){
 		$obj->setChartTicks($ticks);
@@ -104,16 +108,16 @@ DOC;
 
 function jqplot_wp_setup(){
    wp_enqueue_script("jquery");
-   wp_deregister_script('wp-jqplot');
-   wp_enqueue_script("wp-jqplot", WP_PLUGIN_URL."/wp-jqplot/js/jquery.jqplot.min.js",array("jquery"), "",0);
+   wp_deregister_script('jqplot');
+   wp_enqueue_script("jqplot", WP_PLUGIN_URL."/wp-jqplot/js/jquery.jqplot.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.meterGuageRenderer", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.meterGaugeRenderer.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.jqplot.json2", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.json2.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.highlighter", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.highlighter.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.cursor", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.cursor.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.dateAxisRenderer", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.dateAxisRenderer.min.js",array("jquery"), "",0);
    
-   wp_deregister_style('wp-jqplot');
-   wp_enqueue_style("wp-jqplot",WP_PLUGIN_URL."/wp-jqplot/css/jquery.jqplot.min.css",false,"");
+   wp_deregister_style('jqplot');
+   wp_enqueue_style("jqplot",WP_PLUGIN_URL."/wp-jqplot/css/jquery.jqplot.min.css",false,"");
    
    add_shortcode( 'wp-jqplot', 'jqplot_shortcode' );
 }
