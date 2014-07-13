@@ -19,6 +19,8 @@ class Chart_Model {
 	protected $arrDataPointLabel = array();
 	protected $chartDataRenderer = "";
 	protected $chartDatasets = "";
+	protected $chartHeight = "";
+	protected $chartWidth = "";
 	
 	public function newChart(){
 		try {
@@ -39,6 +41,8 @@ class Chart_Model {
 			$this->arrDataPointLabel = array();
 			$this->chartDataRenderer = "";
 			$this->chartDatasets = "";
+			$this->chartHeight = "";
+			$this->chartWidth = "";
 		}catch(Exception $e){
 			echo $e->getMessage();
 		}
@@ -129,6 +133,18 @@ class Chart_Model {
 	public function setChartDatasets($aDatasets){
 		if(!empty($aDatasets)){
 			$this->chartDatasets = $aDatasets;
+		}
+	}
+	
+	public function setChartHeight($aChartHeight){
+		if(!empty($aChartHeight)){
+			$this->chartHeight = $aChartHeight;
+		}
+	}
+	
+	public function setChartWidth($aChartWidth){
+		if(!empty($aChartWidth)){
+			$this->chartWidth = $aChartWidth;
 		}
 	}
 	
@@ -239,9 +255,8 @@ DOC;
 				$labelheightadjust = "labelHeightAdjust: $this->chartLabelHeightAdjust,";
 			}
 				
-			$htmlbody = "<div id=\"$this->chartName\" style=\"height:180px;width:275px;float:left;margin 0 0 0 0;\"></div>";
+			$htmlbody = "<div id=\"$this->chartName\" style=\"height:$this->chartHeight;width:$this->chartWidth;float:left;margin 0 0 0 0;\"></div>";
 			
-			//[[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9],[11,219.9]]]
 			$jsdoc =<<<DOC
 			$jsrendererdoc
      		jQuery.jqplot('$this->chartName', $this->chartDatasets, {

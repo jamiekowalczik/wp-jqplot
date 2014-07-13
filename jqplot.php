@@ -53,6 +53,8 @@ function jqplot_shortcode( $atts ) {
 	$obj->setChartLabelPosition($labelposition);
 	$obj->setChartLabelHeightAdjust($labelheightadjust);
 	$obj->setChartDataRenderer($datarendererurl);
+	$obj->setChartHeight($height);
+	$obj->setChartWidth($width);
 	
 	if($type == "gauge"){
 		$obj->setChartTicks($ticks);
@@ -93,52 +95,6 @@ DOC;
 	return $currentchart;
 }
 
-// Chart Shortcode 1 - Core Shortcode with all options
-// - - - - - - - - - - - - - - - - - - - - - - -
-function jqplot_shortcode1( $atts ) {
-
-	// Default Attributes
-	// - - - - - - - - - - - - - - - - - - - - - - -
-	extract( shortcode_atts(
-	array(
-	'title'            => 'chart',
-	'width'			   => '33%',
-	'height'		   => 'auto',
-	'datasets'         => "[[1, 2],[3,5.12],[5,13.1],[7,33.6],[9,85.9]]"
-			), $atts )
-	);
-
-	// prepare data
-	// - - - - - - - - - - - - - - - - - - - - - - -
-    $title    = str_replace(' ', '', $title);
-    $datasets = explode("next", str_replace(' ', '', $datasets));
-
- 	$total    = count($datasets);
-
-	$chartdata = "[";
- 	for ($i = 0; $i < $total; $i++) {
- 		$chartdata .= "[";
-		$chartdata .= $datasets[$i]."],";
- 	}
- 	$chartdata = substr($chartdata, 0, -1);
- 	$chartdata .= "]";
- 	$datasets = $chartdata;
-	
-	$DOC = <<<DOC
-<script type="text/javascript">
-jQuery(document).ready(function( $ ) {
-     jQuery.jqplot('jqPlot$title',  [$datasets]);
-});
-</script>
-<div id="jqPlot$title" style="height:$height;width:$width; "></div>
-DOC;
-	$currentchart = $DOC;
-	
-	$currentchart = "";
-	
-	return $currentchart;
-}
-
 function jqplot_wp_setup(){
    wp_enqueue_script("jquery");
    wp_deregister_script('jqplot');
@@ -156,9 +112,6 @@ function jqplot_wp_setup(){
 }
 
 add_action('init', 'jqplot_wp_setup');
-
-
-
 
 function displayLineChart($arrDataPoints,$arrDataPointNames,$arrDataPointLabel,$chartName,$height,$width,$chartTitle){
 	try{
