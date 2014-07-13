@@ -1,6 +1,6 @@
 === jqPlot for WordPress ===
-Contributors: Ramoonus
-Donate link: http://www.ramoonus.nl/donate/
+Contributors: JK
+Donate link: http://www.google.com
 Tags: javascript, jquery, excanvas, jqplot
 Requires at least: 3.0
 Tested up to: 3.6
@@ -31,16 +31,17 @@ jqPlot has been tested on IE 7, IE 8, Firefox, Safari, and Opera. You can see jq
 1. Upload `jqplot/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
+
+== Shortcode Examples ==
+[jqplot type="gauge" name="mygauge" label="my chart" labelposition="bottom" labelheightadjust="-10" datarendererurl="/getinfo.php"]
+
+[jqplot type="gauge" name="mygauge1" label="my chart" labelposition="bottom" labelheightadjust="-10" value="33"]
+
+[jqplot type="line" name="linechart" datasets="1,2 next 3,5 next 4,6 next 2,1"]
+
+[jqplot type="line" name="linechart1" datarendererurl="/getinfo1.php"]
+
 == Changelog ==
-= 1.0.8 =
-* Updated core to 1.0.8
-* * Readme update
-
-= 1.0.0.1012 =
-* Based on 1.0.0 beta 2 build 1012 (november 2011)
-* Code optimalisation
-* Readme update
-
-= 0.8.2.792 = 
+= 0.7.12.0 = 
 * Initial version
-* Based on 1.0 beta 2 build 792
+* Based on 1.0
