@@ -37,6 +37,9 @@ function jqplot_shortcode( $atts ) {
 			), $atts )
 	);
 
+	$obj = new Chart_Model();
+	$obj->newChart();
+	
 	// prepare data
 	// - - - - - - - - - - - - - - - - - - - - - - -
 	$name    = str_replace(' ', '', $name);
@@ -44,9 +47,6 @@ function jqplot_shortcode( $atts ) {
 	$intervalcolors = "[$intervalcolors]";
 	$ticks = "[$ticks]";
 	$chart = "";
-	
-	$obj = new Chart_Model();
-	$obj->newChart();
 	
 	$datapointlabel = explode(",", $datapointlabel);
 	$datapointlabeltotal = count($datapointlabel);
