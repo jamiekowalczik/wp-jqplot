@@ -33,10 +33,13 @@ jqPlot has been tested on IE 7, IE 8, Firefox, Safari, and Opera. You can see jq
 
 
 == Shortcode Examples ==
+[jqplot type="gauge" name="mygauge" label="my chart" labelposition="bottom" labelheightadjust="-10" datarendererurl="/getinfo.php"]
+
+[jqplot type="gauge" name="mygauge1" label="my chart" labelposition="bottom" labelheightadjust="-10" value="33"]
+
+[jqplot type="line" name="linechart" datasets="1,2 next 3,5 next 4,6 next 2,1"]
+
 [jqplot type="line" name="history" width="100%" height="225px" datarendererurl="/getinfo1.php" datapointlabel="solar,humid,temp"]
-[jqplot type="gauge" name="temp" label="Temperature" labelposition="bottom" labelheightadjust="-5" datarendererurl="/getinfo.php"]
-[jqplot type="gauge" name="humid" label="Humidity" labelposition="bottom" labelheightadjust="-5" datarendererurl="/getinfo.php"]
-[jqplot type="gauge" name="solar" label="Solar" labelposition="bottom" labelheightadjust="-5" datarendererurl="/getinfo.php"]
 
 == Changelog ==
 = 0.7.12.0 = 
