@@ -17,7 +17,7 @@ function jqplot_shortcode( $atts ) {
 	// - - - - - - - - - - - - - - - - - - - - - - -
 	extract( shortcode_atts(
 		array(
-			'type'			   => '',//'gauge',
+			'type'			   => '',//'gauge', //'line',
 			'name'			   => '', //'chart',
 			'title'            => '', //'chart',
 			'label'			   => '', //'chart',
@@ -82,18 +82,24 @@ function jqplot_shortcode( $atts ) {
 		$obj->setChartValue($value);
 		$chart = $obj->displayGauge();
 	}elseif($type == "line"){
-		$datasets = explode("next", str_replace(' ', '', $datasets));
-		$total    = count($datasets);
-		
-		$chartdata = "[[";
-		for ($i = 0; $i < $total; $i++) {
+		$alldatasets = explode(";", str_replace(' ','',$datasets));
+		$totaldatasets = count($alldatasets);
+		$chartdata = "[";
+		for ($i = 0; $i < $totaldatasets; $i++){
+			$datasets = explode("next", str_replace(' ', '', $alldatasets[$i]));
+			$total    = count($datasets);
+			
 			$chartdata .= "[";
-			$chartdata .= $datasets[$i]."],";
+			for ($j = 0; $j < $total; $j++) {
+				$chartdata .= "[".$datasets[$j]."],";
+			}
+			$chartdata = substr($chartdata, 0, -1);
+			$chartdata .= "],";
 		}
 		$chartdata = substr($chartdata, 0, -1);
-		$chartdata .= "]]";
-		$datasets = $chartdata;
-		$obj->setChartDatasets($datasets);
+		$chartdata .= "]";
+		
+		$obj->setChartDatasets($chartdata);
 		$chart = $obj->displayChart();
 	}
 	
@@ -116,6 +122,8 @@ function jqplot_wp_setup(){
    wp_deregister_script('jqplot');
    wp_enqueue_script("jqplot", WP_PLUGIN_URL."/wp-jqplot/js/jquery.jqplot.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.meterGuageRenderer", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.meterGaugeRenderer.min.js",array("jquery"), "",0);
+   wp_enqueue_script("jqplot.canvasTextRenderer", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.canvasTextRenderer.min.js",array("jquery"), "",0);
+   wp_enqueue_script("jqplot.canvasAxisLabelRenderer", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.canvasAxisLabelRenderer.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.jqplot.json2", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.json2.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.highlighter", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.highlighter.min.js",array("jquery"), "",0);
    wp_enqueue_script("jqplot.cursor", WP_PLUGIN_URL."/wp-jqplot/js/plugins/jqplot.cursor.min.js",array("jquery"), "",0);

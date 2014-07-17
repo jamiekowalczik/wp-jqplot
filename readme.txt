@@ -39,6 +39,8 @@ jqPlot has been tested on IE 7, IE 8, Firefox, Safari, and Opera. You can see jq
 
 [wp-jqplot type="line" name="linechart" datasets="1,2 next 3,5 next 4,6 next 2,1"]
 
+[wp-jqplot type="line" name="linechart" datasets="1,2 next 3,5 next 4,6 next 2,1;1,7 next 3,10 next 4,4" datapointlabel="Temperature,Humidity"]
+
 [wp-jqplot type="line" name="history" width="100%" height="225px" datarendererurl="/getinfo1.php" datapointlabel="solar,humid,temp"]
 
 == Changelog ==

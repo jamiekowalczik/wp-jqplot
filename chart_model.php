@@ -246,6 +246,9 @@ DOC;
 			$chartval = "chartVal";
 			$datarenderer = "";
 			$jsrendererdoc = "";
+			$datasets = $this->chartDatasets;
+			$datasetsdecoded = "";
+			$datasetscount = "";
 			
 			if(!$this->chartDataRenderer == ""){
 				$chartval = "";
@@ -265,8 +268,14 @@ DOC;
 						return ret;
 					};
 DOC;
+				$json = file_get_contents(get_site_url().$this->chartDataRenderer);
+				$datasetsdecoded = json_decode($json,true);
+				$datasetscount = count($datasetsdecoded);
+			}else{
+				$datasetsdecoded = json_decode($datasets,true);
+				$datasetscount = count($datasetsdecoded);
+			}
 			
-			}	
 			$labelposition = "";
 			if(!$this->chartLabelPosition == ""){
 				$labelposition = "labelPosition: '$this->chartLabelPosition',";
@@ -277,11 +286,16 @@ DOC;
 				$labelheightadjust = "labelHeightAdjust: $this->chartLabelHeightAdjust,";
 			}
 			
-			$chartDataPointLabel = "series: [";
-			foreach($this->arrDataPointLabel as $aDataPointLabel){
-				$chartDataPointLabel .= "{label:'".$aDataPointLabel."'},";
+			$seriesData = "series: [";
+			for ($i = 0; $i < $datasetscount; $i++) {
+				$seriesData .= "{";
+				$seriesData .= "label:'".$this->arrDataPointLabel[$i]."'";
+				$seriesData .= "},";
 			}
-			$chartDataPointLabel .= "],";
+			//foreach($this->arrDataPointLabel as $aDataPointLabel){
+			//	$chartDataPointLabel .= "{label:'".$aDataPointLabel."'},";
+			//}
+			$seriesData .= "],";
 				
 			$chartlegend = "";
 			if($this->boolShowLegend == 'true'){
@@ -302,11 +316,12 @@ DOC;
 			
 			$jsdoc =<<<DOC
 			$jsrendererdoc
-     		jQuery.jqplot('$this->chartName', $this->chartDatasets, {
+     		jQuery.jqplot('$this->chartName', $datasets, {
+     		    title: '$this->chartTitle',	
      			$chartHighlighter
 				$chartCursor
 				$chartlegend
-				$chartDataPointLabel 
+				$seriesData 
 				$datarenderer
 			});
 DOC;
